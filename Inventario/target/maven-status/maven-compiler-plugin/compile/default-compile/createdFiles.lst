@@ -1,0 +1,6 @@
+existencias\ControlExistencias.class
+com\mycompany\inventario\GestionProductos.class
+informes\Informes.class
+com\mycompany\inventario\Inventario.class
+categorias\Categorias.class
+compras\PedidosCompra.class
