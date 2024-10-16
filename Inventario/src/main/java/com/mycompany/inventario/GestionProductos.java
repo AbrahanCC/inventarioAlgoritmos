@@ -70,10 +70,13 @@ public class GestionProductos {
                         System.out.println("Ingrese la cantidad de producto");
                         int cantidad = scan.nextInt();
 
-                        System.out.println("Ingrese precio del producto");
+                        System.out.println("Ingrese precio del producto compra");
                         double precio = scan.nextDouble();
+                        
+                        System.out.println("Ingrese precio del producto venta");
+                        double precioV = scan.nextInt();
 
-                        bw.write(id + " | " + nombre + " | " + descripcion + " | " + cantidad + " | " + " Q " + precio + " | " + "\n");
+                        bw.write(id + " | " + nombre + " | " + descripcion + " | " + cantidad + " | " + " Q " + precio + " | " + precioV + "\n");
                         bw.close();
                         fw.close();
 
@@ -186,7 +189,8 @@ public class GestionProductos {
                                 System.out.println("Producto encontrado: ");
                                 System.out.println("Nombre: " + datos[1]);
                                 System.out.println("Descripción: " + datos[2]);
-                                System.out.println("Precio: " + datos[3]);
+                                System.out.println("Precio compra: " + datos[3]);
+                                System.out.println("Precio venta: ");
 
                                 // Pedir nuevos datos
                                 System.out.print("Ingrese el nuevo nombre: ");
@@ -195,12 +199,15 @@ public class GestionProductos {
                                 System.out.print("Ingrese la nueva descripcion: ");
                                 String nuevaDescripcion = scan.nextLine();
 
-                                System.out.print("Ingrese el nuevo precio: ");
+                                System.out.print("Ingrese el nuevo precio compra: ");
                                 double nuevoPrecio = scan.nextDouble();
+                                
+                                System.out.println("Ingrese el nuevo precio venta: ");
+                                double nuevoPrecioV = scan.nextDouble();
                                 scan.nextLine(); // limpiar el buffer
 
                                 // Actualizar la línea con los nuevos datos
-                                linea = datos[0] + "|" + nuevoNombre + "|" + nuevaDescripcion + "|" + nuevoPrecio;
+                                linea = datos[0] + "|" + nuevoNombre + "|" + nuevaDescripcion + "|" + nuevoPrecio + "|" + nuevoPrecioV;
                                 productoModificado = true;
                             }
 
@@ -229,8 +236,7 @@ public class GestionProductos {
                 }
 
                 case 5:
-                  
-                          // Opción para salir del sistema
+                    // Opción para salir del sistema
                     System.out.println("Saliendo del menu de productos ");
                     return; // Finalizar la ejecución
 

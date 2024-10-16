@@ -48,12 +48,14 @@ public class Categorias {
                             BufferedReader br = new BufferedReader(fr);
                             String linea;
 
+                            // crea un nuevo ID, se incrementa
                             while ((linea = br.readLine()) != null) {
                                 id++;// mientras la linea no este vacia se cuenta y se incrementa 1
                             }
-                            br.close();
+                            br.close();// cierra el lector que comprueba que existan lineas de datos
                         }
 
+                        // abre el archivo para la escritura
                         FileWriter fw = new FileWriter(c, true);// true es para agregar y no trncar el archiuvo de txt
                         BufferedWriter bw = new BufferedWriter(fw);//lee lo que va agregando
 
@@ -68,38 +70,39 @@ public class Categorias {
                             BufferedReader br = new BufferedReader(fr);
                             String linea;
 
+                            // verifica si ya existe una categoria con el mismo nombre
                             while ((linea = br.readLine()) != null) {
-                                String[] datos = linea.split("\\|");
-                                if (datos[1].trim().equalsIgnoreCase(nombreCategoria.trim())){
+                                String[] datos = linea.split("\\|");//separa los datos escritos para comparar
+                                if (datos.length > 1 && datos[1].trim().equalsIgnoreCase(nombreCategoria)) {
                                     existeCategoria = true;
                                     break;
                                 }
                             }
-                        br.close();
+                            br.close();// cierra el lector de archivos despues de comprobar
                         }
-                        
-                    
-                    if (nombreCategoria.isEmpty() || existeCategoria ) {
-                        System.out.println("El nombre no puede estar vacío o la categoría ya existe.");
-                        return;
-                    }
 
-                    bw.write(id + " | " + nombreCategoria + "\n");
-                    fw.close();
-                    bw.close();
-                    
-                    System.out.println("Categoria agregada correctamente");
-                    
+                        // verifica si el nombre esta vacio o la categoria ya existe
+                        if (nombreCategoria.isEmpty() || existeCategoria) {
+                            System.out.println("El nombre no puede estar vacío o la categoría ya existe.");
+                            return;// no agrega la categoria, pues ya existe
+                        }
+
+                        // escribe la nueva categoria en el archivo
+                        bw.write(id + " | " + nombreCategoria + "\n");
+
+                        // cierra el eescirtor despues de agregar la cateforia
+                        
+                        bw.close();
+
+                        System.out.println("Categoria agregada correctamente");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Categorias.class.getName()).log(Level.SEVERE, null, ex);
                     }
-           
-            catch (IOException e){
-                                Logger.getLogger(Categorias.class.getName()).log(Level.SEVERE, null,e );
-                                    }
-            break;
+                    break;
             
                 case 2 :
                     try{
-                        System.out.println("Ingrese el ID de la categoria ");
+                        System.out.println("Ingrese el ID de la categoria que quiere eliminar");
                         String Eliminar = scan.nextLine();
                         
                         FileReader fr = new FileReader(c);
@@ -115,20 +118,28 @@ public class Categorias {
                         String linea;
                         boolean categoriaEliminada = false;
                         
+                        // Recorre las categorias y copia solo las que no tienen el ID que se va a eliminar
                         while ((linea = br.readLine()) != null){
                             String[] datos = linea.split("\\|");
                             
                             if (!datos[0].equals(Eliminar)){
                                 bw.write(linea+ "\n");
                             } else{
-                                categoriaEliminada =true;
+                                categoriaEliminada = true;
                             }
                         }
                             br.close();
                             bw.close();
                             
+                            // sobreescribe el archivo original con la copia
                             Files.move(fcc.toPath(), c.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                            System.out.println("Categoria con ID " + Eliminar + " eliminado correctamente");
+                            
+                            if (categoriaEliminada) {
+                                System.out.println("Categoria con ID " + Eliminar + " eliminado correctamente");
+                            }
+                            else{
+                                System.out.println("No se encontro una categoria con ese ID");
+                            }
                         
                     }
                     catch (IOException ex){
@@ -136,13 +147,56 @@ public class Categorias {
                     }
                     break;
                     
-                case 3: {
-                
+                case 3: { 
+                    try { 
+                        //Lee el archivo para poder mostrar el contenido del archivo de txt
+                        FileReader fr = new FileReader(c);
+                        BufferedReader br = new BufferedReader (fr);
+                        
+                        String linea;// es la cadena donde se almacenan los datos
+                        
+                        System.out.println("\n CATEGORIAS AGREGADAS \n");
+                        
+                        while ((linea = br.readLine ()) != null){
+                        System.out.print(linea + "\n");// imprime cada categoria
+                        }
+                        br.close();
+                        fr.close();
+                        }
+                    catch (IOException ex){
+                        Logger.getLogger(Categorias.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                 }
+                
+                case 4 :{
+                    try{
+                        FileReader fr = new FileReader(c);
+                        BufferedReader br = new BufferedReader(fr);
                         
-                           
+                        String linea;
                         
+                        System.out.println("Categorias agregadas");
                         
+                        while ((linea = br.readLine()) != null) {
+                            System.out.println(linea + "/n");
+                        }
+                        
+                        br.close();
+                        
+                        }
+                        catch (IOException ex){
+                          Logger.getLogger(Categorias.class.getName()).log(Level.SEVERE,null, ex);
+                        }       
+                }
+                
+                case 5 :{
+                    System.out.println("Saliendo del menu de categorias");
+                    return;// sale del menu de categorias
+                }
+                
+                default:
+                    System.out.println("Opcion invalida ");
                     
             }
         }

@@ -27,7 +27,8 @@ public class Inventario {
         System.out.println("2) Control de existencias");
         System.out.println("3) Pedidos de compra");
         System.out.println("4) Informes y estadisticas");
-        System.out.println("5) Salir ");
+        System.out.println("5) Categorias");
+        System.out.println("6) Salir ");
         int opcion = scan.nextInt();
         
         switch (opcion) {
@@ -36,8 +37,8 @@ public class Inventario {
                 }
             
             case 2: {
-                ControlExistencias control = new ControlExistencias();
-                control.mostrarMenu();
+                ControlExistencias existencias = new ControlExistencias();
+                existencias.mostrarMenu();
             }
             case 3: {
                 PedidosCompra pedidos = new PedidosCompra();
@@ -47,7 +48,12 @@ public class Inventario {
                 Informes informes = new Informes();
                 informes.mostrarMenu();
             }
-            case 5: 
+            
+            case 5:
+                Categorias categorias = new Categorias();
+                categorias.mostrarMenu();
+                
+            case 6: 
                 System.out.println("Saliendo del sistema...");
                     break;
                 default:
