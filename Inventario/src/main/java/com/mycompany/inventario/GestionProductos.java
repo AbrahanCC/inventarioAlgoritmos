@@ -28,15 +28,16 @@ public class GestionProductos {
         int opcion = 0;
 
         File f = new File("productos.txt");
+        File c = new File("categorias.txt");
 
         while (true) {
 
-            System.out.println("1. Agregar producto");
-            System.out.println("2. Eliminar producto");
-            System.out.println("3. Mostrar productos");
-            System.out.println("4. Modificar productos");
-            System.out.println("5. Salir ");
-            System.out.println("Seleccione una opcion ");
+            System.out.println("    1. Agregar producto    ");
+            System.out.println("    2. Eliminar producto    ");
+            System.out.println("    3. Mostrar productos    ");
+            System.out.println("    4. Modificar productos    ");
+            System.out.println("    5. Salir     ");
+            System.out.println("    Seleccione una opcion     ");
             opcion = scan.nextInt();
             scan.nextLine();//se hizo un salto de linea pues no deja leer el nuevo dato
 
@@ -52,18 +53,55 @@ public class GestionProductos {
                             FileReader fr = new FileReader(f);
                             BufferedReader br = new BufferedReader(fr);
                             String linea;
+                            
                             while ((linea = br.readLine()) != null) {
                                 id++; // Incrementar el ID por cada línea encontrada
                             }
                             br.close(); // Cerrar el lector de archivos
                         }// finaliza la autonumeracion dle id
 
-                        FileWriter fw = new FileWriter(f, true);// fw es un escritor de archivo si no se hace eso no funcionara
-                        BufferedWriter bw = new BufferedWriter(fw); //bw es para leer lo que vas agregando 
+                        FileWriter fw = new FileWriter(f, true);// abre el archivo para escribir en el
+                        BufferedWriter bw = new BufferedWriter(fw); //retiene los caracteres que se van a agregar al archivo hasta que se cierre y los escribe en el
 
+                                // Mostrar las categorías disponibles y permitir selección
+                                System.out.println("Seleccione una categoria para el producto:");
+                                
+                                if (c.exists()) {
+                                    FileReader fr = new FileReader(c);
+                                    BufferedReader br = new BufferedReader(fr);
+                                    String lineaCategoria;
+                                                                       
+                                    //mostrar todas las categorias con su id
+                                    while ((lineaCategoria = br.readLine()) != null) {
+                                        System.out.println( lineaCategoria );
+                                        
+                                    }
+                                    br.close();
+                                } 
+                                else {
+                                    System.out.println("No hay categorias disponibles. Debe crear al menos una categoria.");
+                                    break;
+                                }
+
+                                // Seleccionar categoría
+                                System.out.println("Ingrese el numero de la categoria:");
+                                int seleccionCategoria = scan.nextInt();
+                                scan.nextLine(); // Salto de línea
+
+                                // Leer la categoría seleccionada del archivo
+                                String categoriaSeleccionada = null;
+                                
+                                FileReader fr = new FileReader(c);
+                                BufferedReader br = new BufferedReader(fr);
+                                
+                                for (int i = 1; i <= seleccionCategoria; i++) {
+                                    categoriaSeleccionada = br.readLine().trim();// se guarda solo el nombre de la categoria
+                                }
+                                br.close();
+                                
                         System.out.println("Ingrese nombre del producto");
                         String nombre = scan.nextLine();
-
+                                
                         System.out.println("Ingrese descripcion del producto");
                         String descripcion = scan.nextLine();
 
@@ -75,12 +113,15 @@ public class GestionProductos {
                         
                         System.out.println("Ingrese precio del producto venta");
                         double precioV = scan.nextInt();
-
-                        bw.write(id + " | " + nombre + " | " + descripcion + " | " + cantidad + " | " + " Q " + precio + " | " + precioV + "\n");
+                                                
+                        // Agregar producto al archivo con la categoría seleccionada
+                        bw.write(id + " | " + nombre + " | " + descripcion + " | " + cantidad + " | " + "Q " + precio + " | Q " + precioV + " | " + categoriaSeleccionada +  "\n");
+                        
                         bw.close();
                         fw.close();
 
                         System.out.println("Producto agregado correctamente");
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(GestionProductos.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -90,7 +131,7 @@ public class GestionProductos {
                     try {
                         
                         System.out.println("Ingrese el ID del producto que desea eliminar ");
-                        String Eliminar = scan.nextLine();
+                        String eliminar = scan.nextLine();
 
                         FileReader fr = new FileReader(f);
                         BufferedReader br = new BufferedReader(fr);
@@ -106,9 +147,9 @@ public class GestionProductos {
                         // Leer el archivo original línea por línea
                         while ((linea = br.readLine()) != null) {
                             String[] datos = linea.split("\\|");  // Separar los campos de la línea usando '|' como delimitador
-
+                            
                             // Si el ID no coincide con el ingresado, escribir la línea en el archivo temporal
-                            if (!datos[0].equals(Eliminar)) {
+                            if (!datos[0].equals(eliminar)) {
                                 bw.write(linea + "\n");
                             } else {
                                 productoEliminado = true;  // Se encontró y omitió el producto a eliminar
@@ -123,11 +164,11 @@ public class GestionProductos {
                         if (productoEliminado) {
                             // Reemplazar el archivo original con el archivo temporal
                             Files.move(fc.toPath(), f.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                            System.out.println("Producto con ID " + Eliminar + " eliminado correctamente.");
+                            System.out.println("Producto con ID " + eliminar + " eliminado correctamente.");
                         } else {
                             // El producto no se encontró, eliminar el archivo temporal
                             fc.delete();
-                            System.out.println("Producto con ID " + Eliminar + " no encontrado.");
+                            System.out.println("Producto con ID " + eliminar + " no encontrado.");
                         }
 
                     } catch (IOException ex) {
@@ -146,7 +187,7 @@ public class GestionProductos {
                         System.out.println(" \n Productos agregados \n ");
 
                         while ((linea = br.readLine()) != null) {
-                            System.out.println(linea + "\n");
+                            System.out.println(linea + "\n");// imprime los productos agregados
                         }
                         br.close();
                         fr.close();
@@ -188,33 +229,38 @@ public class GestionProductos {
                             if (datos[0].equals(Modificar)) {
                                 System.out.println("Producto encontrado: ");
                                 System.out.println("Nombre: " + datos[1]);
-                                System.out.println("Descripción: " + datos[2]);
-                                System.out.println("Precio compra: " + datos[3]);
-                                System.out.println("Precio venta: ");
-
+                                System.out.println("Descripcion: " + datos[2]);
+                                System.out.println("Cantidad: " + datos[3] );
+                                System.out.println("Precio compra: " + datos[4]);
+                                System.out.println("Precio venta: " + datos[5]);
+                                                               
                                 // Pedir nuevos datos
-                                System.out.print("Ingrese el nuevo nombre: ");
+                                System.out.println("Ingrese el nuevo nombre: ");
                                 String nuevoNombre = scan.nextLine();
 
-                                System.out.print("Ingrese la nueva descripcion: ");
+                                System.out.println("Ingrese la nueva descripcion: ");
                                 String nuevaDescripcion = scan.nextLine();
-
-                                System.out.print("Ingrese el nuevo precio compra: ");
-                                double nuevoPrecio = scan.nextDouble();
+                                
+                                System.out.println("Ingrese la nueva cantidad: ");
+                                String nuevaCantidad = scan.nextLine();
+                                
+                                System.out.println("Ingrese el nuevo precio compra: ");
+                                String nuevoPrecio= scan.nextLine();
                                 
                                 System.out.println("Ingrese el nuevo precio venta: ");
                                 double nuevoPrecioV = scan.nextDouble();
+                                                                                                                         
                                 scan.nextLine(); // limpiar el buffer
 
                                 // Actualizar la línea con los nuevos datos
-                                linea = datos[0] + "|" + nuevoNombre + "|" + nuevaDescripcion + "|" + nuevoPrecio + "|" + nuevoPrecioV;
+                                linea = datos[0] + "|" + nuevoNombre + "|" + nuevaDescripcion + "|" + nuevaCantidad + "|" + nuevoPrecio + "|" + nuevoPrecioV ;
                                 productoModificado = true;
                             }
 
-                            // Escribir la línea (modificada o no) en el archivo temporal
+                            // Escribir la línea modificada en el archivo temporal
                             bw.write(linea + "\n");
                         }
-
+                        
                         // Cerrar los flujos de lectura y escritura
                         br.close();
                         bw.close();
@@ -241,7 +287,7 @@ public class GestionProductos {
                     return; // Finalizar la ejecución
 
                 default:
-                    System.out.println("Opción no válida, por favor intente de nuevo.");
+                    System.out.println("Opción no valida, por favor intente de nuevo.");
             }
         }
     }

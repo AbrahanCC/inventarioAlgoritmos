@@ -9,7 +9,7 @@ package compras;
  */
 public class PedidosCompra {
     public void mostrarMenu() {
-        System.out.println("Aquí va el código para los pedidos de compra.");
+        System.out.println("Aqui va el código para los pedidos de compra.");
         // Código específico para los pedidos de compra
     }
     

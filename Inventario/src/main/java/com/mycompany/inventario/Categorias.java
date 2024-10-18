@@ -149,26 +149,67 @@ public class Categorias {
                     
                 case 3: { 
                     try { 
-                        //Lee el archivo para poder mostrar el contenido del archivo de txt
+                        //verificar si el archivo existe
+                        if (!c.exists()){
+                            System.out.println("No hay categorias por modificar");
+                            break;
+                        }
+                        
+                        //ingresar el ID de la categoria para modificar
+                        System.out.println("Ingrese el ID de la categoria que desea modificar");
+                        String modificar = scan.nextLine();
+                        
+                        // crear un archivo temporal para sobreescribir los productos que no se modificaran
                         FileReader fr = new FileReader(c);
                         BufferedReader br = new BufferedReader (fr);
                         
-                        String linea;// es la cadena donde se almacenan los datos
+                        File fcc = new File("archivo_categorias_copia.txt");
+                        FileWriter fw = new FileWriter(fcc);
+                        BufferedWriter bw = new BufferedWriter(fw);
                         
-                        System.out.println("\n CATEGORIAS AGREGADAS \n");
+                        String linea;
+                        boolean categoriaModificada = false;
                         
-                        while ((linea = br.readLine ()) != null){
-                        System.out.print(linea + "\n");// imprime cada categoria
-                        }
-                        br.close();
-                        fr.close();
-                        }
-                    catch (IOException ex){
-                        Logger.getLogger(Categorias.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        break;
-                }
-                
+                        while ((linea = br.readLine()) != null){
+                            String [] datos = linea.split("\\|");
+                            
+                            // si el Id conincide, se puede modificar
+                            if (datos[0].equals(modificar)){
+                            System.out.println("Categoria encontrada");
+                            System.out.println("Nombre " + datos[1]);
+                            
+                            //pedir nuevos datos
+                            System.out.println("Ingrese el nuevo nombre");
+                            String nuevoNombre = scan.nextLine();
+                            scan.nextLine();// para saltar al siguiente scaner
+                               
+                            //Actualizar la linea con los nuevos datos
+                            linea = datos[0] + "|" + nuevoNombre + "|";
+                            categoriaModificada = true;
+                            
+                            //escribir la linea modificada en el archivo temporal
+                            bw.write(linea + "\n");
+                            }
+                            
+                            //cerrar los flujos de escritura
+                            br.close();
+                            bw.close();
+                            
+                            // si la categoria es modificada, reemplazar el archivo temporal por el original
+                            if (categoriaModificada){
+                                Files.move(fcc.toPath(), c.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                                System.out.println("Categoria con ID " + modificar + "modificado correctamente ");
+                            } else{
+                            // si no se encontro la categoria se eliminal el archivo temporal
+                            fcc.delete();
+                                System.out.println("Producto con ID " + modificar + "no se encontro" );
+                            }}}
+                             catch (IOException ex) {
+                                    Logger.getLogger(Categorias.class.getName()).log(Level.SEVERE, null , ex);
+                                     }                        
+                                break;
+                            }
+                        
                 case 4 :{
                     try{
                         FileReader fr = new FileReader(c);
@@ -176,10 +217,10 @@ public class Categorias {
                         
                         String linea;
                         
-                        System.out.println("Categorias agregadas");
+                        System.out.println("\n CATEGORIAS AGREGADAS \n");
                         
                         while ((linea = br.readLine()) != null) {
-                            System.out.println(linea + "/n");
+                            System.out.println(linea + "\n");
                         }
                         
                         br.close();

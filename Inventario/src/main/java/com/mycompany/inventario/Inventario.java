@@ -6,11 +6,8 @@ package com.mycompany.inventario;
 
 import java.util.Scanner;
 
-//Paquetes del menu
-//import gestion.GestionProductos;
+//paquete del control de existencias
 import existencias.ControlExistencias;
-import compras.PedidosCompra;
-import informes.Informes;
 /**
  *
  * @author abrah
@@ -20,7 +17,7 @@ public class Inventario {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         
-        System.out.println("Bienvenido al inventario");
+        System.out.println("~~~~~~Bienvenido al inventario~~~~~~");
         
         System.out.println("-----Elija una opcion-----");
         System.out.println("1) Gestion de productos");
@@ -33,30 +30,33 @@ public class Inventario {
         
         switch (opcion) {
             case 1: {
+                //ejecuta la clase gestion de productos el cual tiene el metodo de mostrarMenu
                 GestionProductos.mostrarMenu();
                 }
             
             case 2: {
+                // en este caso creamos un nuevo obejto llamado existencias pues nuestra clase esta en otro folder y motrara el metodo mostrarMenu
                 ControlExistencias existencias = new ControlExistencias();
                 existencias.mostrarMenu();
             }
             case 3: {
-                PedidosCompra pedidos = new PedidosCompra();
-                pedidos.mostrarMenu();
+                
             }
             case 4: {
-                Informes informes = new Informes();
-                informes.mostrarMenu();
+                
             }
             
             case 5:
+                //se crea un objeto categorias, para llamar a la clase Categorias y mostrar su menu
                 Categorias categorias = new Categorias();
                 categorias.mostrarMenu();
                 
             case 6: 
-                System.out.println("Saliendo del sistema...");
+                System.out.println("Saliendo del sistema");
                     break;
+                    
                 default:
+                    // si no elije una opcion valida, termina aca
                     System.out.println("Opción no válida.");
             }
         }

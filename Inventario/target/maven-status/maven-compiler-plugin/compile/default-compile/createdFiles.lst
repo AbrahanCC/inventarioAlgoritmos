@@ -1,6 +1,5 @@
 existencias\ControlExistencias.class
 com\mycompany\inventario\GestionProductos.class
-informes\Informes.class
 com\mycompany\inventario\Inventario.class
 com\mycompany\inventario\Categorias.class
 compras\PedidosCompra.class

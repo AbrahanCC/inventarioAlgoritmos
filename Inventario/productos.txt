@@ -1,3 +1,6 @@
-12|Servilletas|Servilletas de 4 cuartas telar multicolor|Q 35.0|
-2|Servilletas|Servilletas de cintura 4 cuartas multicolor|Q |6|45.0|
-3 | Servilletas | Servilletas 3 cuartas cintura multicolor |  | 6 |  Q 25.0 | 
+1 | Cargadores | Cargadores multicolor | 6 | Q 85.0 | Q 110.0 | 1 | Cargadores
+2 | Cargadores | cargadores, multicolor | 8 | Q 85.0 | Q 110.0 | 1 | Cargadores
+3 | Servilletas | Servilletas de cintura | 12 | Q 28.0 | Q 35.0 | 2 | Servilletas de 4 cuartas
+4 | Servilletas | servilletas de 3 cuartas multicolor, cintura | 12 | Q 16.0 | Q 25.0 | 3 | Servilletas de 3 cuartas
+5 | Servilletas  | servilletas telar 4 cuartas, multicolor | 12 | Q 20.0 | Q 25.0 | 2 | Servilletas de 4 cuartas
+6 | Servilleta | servilletas 4 cuartas telar, multicolor | 12 | Q 20.0 | Q 25.0 | 2 | Servilletas de 4 cuartas
