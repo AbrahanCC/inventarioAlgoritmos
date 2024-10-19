@@ -53,7 +53,7 @@ public class Categorias {
                                 id++;// mientras la linea no este vacia se cuenta y se incrementa 1
                             }
                             br.close();// cierra el lector que comprueba que existan lineas de datos
-                        }
+                        }// termina el aumento del id
 
                         // abre el archivo para la escritura
                         FileWriter fw = new FileWriter(c, true);// true es para agregar y no trncar el archiuvo de txt
@@ -73,6 +73,7 @@ public class Categorias {
                             // verifica si ya existe una categoria con el mismo nombre
                             while ((linea = br.readLine()) != null) {
                                 String[] datos = linea.split("\\|");//separa los datos escritos para comparar
+                                
                                 if (datos.length > 1 && datos[1].trim().equalsIgnoreCase(nombreCategoria)) {
                                     existeCategoria = true;
                                     break;

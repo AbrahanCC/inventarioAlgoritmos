@@ -4,3 +4,4 @@
 4 | Servilletas | servilletas de 3 cuartas multicolor, cintura | 12 | Q 16.0 | Q 25.0 | 3 | Servilletas de 3 cuartas
 5 | Servilletas  | servilletas telar 4 cuartas, multicolor | 12 | Q 20.0 | Q 25.0 | 2 | Servilletas de 4 cuartas
 6 | Servilleta | servilletas 4 cuartas telar, multicolor | 12 | Q 20.0 | Q 25.0 | 2 | Servilletas de 4 cuartas
+7 | Corte | Corte nueve varas lana costura sanjuanera | 1 | Q 300.0 | Q 325.0 | 4 | Cortes
