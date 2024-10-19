@@ -88,13 +88,15 @@ public class GestionProductos {
                                 int seleccionCategoria = scan.nextInt();
                                 scan.nextLine(); // Salto de línea
 
-                                // Leer la categoría seleccionada del archivo
+                                // la cadena debe estar vacia para que se pueda almacenar el nombre y comparar
                                 String categoriaSeleccionada = null;
                                 
                                 FileReader fr = new FileReader(c);
                                 BufferedReader br = new BufferedReader(fr);
                                 
+                                //compara el id que se ingreso con los id que hay en el archivo de texto, productos
                                 for (int i = 1; i <= seleccionCategoria; i++) {
+                                    //lee linea por linea el archivo y compara si es el que el usuario ingreso
                                     categoriaSeleccionada = br.readLine().trim();// se guarda solo el nombre de la categoria
                                 }
                                 br.close();
@@ -122,7 +124,9 @@ public class GestionProductos {
 
                         System.out.println("Producto agregado correctamente");
                         
-                    } catch (IOException ex) {
+                    } 
+                    // nos permite ver los errores, en lo que se ejecuta el programa
+                    catch (IOException ex) {
                         Logger.getLogger(GestionProductos.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
@@ -142,7 +146,7 @@ public class GestionProductos {
                         BufferedWriter bw = new BufferedWriter(fw);
 
                         String linea;
-                        boolean productoEliminado = false;  // Bandera para verificar si el producto fue eliminado
+                        boolean productoEliminado = false;  // variable para verificar si el producto fue eliminado
 
                         // Leer el archivo original línea por línea
                         while ((linea = br.readLine()) != null) {
@@ -219,7 +223,7 @@ public class GestionProductos {
                         BufferedWriter bw = new BufferedWriter(fw);
 
                         String linea;
-                        boolean productoModificado = false;  // Bandera para verificar si el producto fue modificado
+                        boolean productoModificado = false;  // variable para verificar si el producto fue modificado
 
                         // Leer el archivo original línea por línea
                         while ((linea = br.readLine()) != null) {
